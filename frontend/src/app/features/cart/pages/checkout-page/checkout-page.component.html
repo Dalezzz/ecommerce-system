@@ -1,0 +1,96 @@
+<section class="checkout-page">
+  <div class="hero">
+    <p class="eyebrow">Checkout</p>
+    <h1>Pasarela de pago sandbox</h1>
+    <p class="lead">Completa la dirección y los datos de tarjeta para confirmar el pago antes de crear la orden.</p>
+  </div>
+
+  @if (loading) {
+    <p class="placeholder">Preparando checkout...</p>
+  }
+
+  @if (errorMessage) {
+    <p class="error">{{ errorMessage }}</p>
+  }
+
+  @if (!loading && cart) {
+    <div class="checkout-grid">
+      <form class="checkout-form" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+        <section class="panel">
+          <h2>Dirección de envío</h2>
+          <label>
+            Dirección
+            <input type="text" formControlName="direccion" placeholder="Calle, número, piso" />
+          </label>
+          <label>
+            Ciudad
+            <input type="text" formControlName="ciudad" placeholder="Madrid" />
+          </label>
+          <label>
+            Código postal
+            <input type="text" formControlName="codigo_postal" placeholder="28001" />
+          </label>
+          <label>
+            País
+            <input type="text" formControlName="pais" placeholder="Espana" />
+          </label>
+        </section>
+
+        <section class="panel">
+          <h2>Pago</h2>
+          <label>
+            Pasarela
+            <select formControlName="metodo_pago">
+              <option value="stripe">Stripe sandbox</option>
+              <option value="mercadopago">MercadoPago sandbox</option>
+              <option value="paypal">PayPal sandbox</option>
+            </select>
+          </label>
+          <label>
+            Titular
+            <input type="text" formControlName="cardHolder" placeholder="Nombre en la tarjeta" />
+          </label>
+          <label>
+            Número de tarjeta
+            <input type="text" formControlName="cardNumber" placeholder="4242 4242 4242 1111" />
+          </label>
+          <div class="grid-2">
+            <label>
+              Vencimiento
+              <input type="text" formControlName="expiry" placeholder="12/28" />
+            </label>
+            <label>
+              CVV
+              <input type="text" formControlName="cvv" placeholder="123" />
+            </label>
+          </div>
+          <p class="hint">Sandbox: usa una tarjeta que termine en 1111 o comience en 4242 para aprobar el pago.</p>
+        </section>
+
+        <button type="submit" [disabled]="processing">
+          {{ processing ? 'Procesando pago...' : 'Pagar y crear pedido' }}
+        </button>
+      </form>
+
+      <aside class="summary">
+        <h2>Resumen</h2>
+        <p>{{ cart.items.length }} productos</p>
+        <strong>${{ cart.total.toFixed(2) }}</strong>
+        @for (item of cart.items; track item.producto_id) {
+          <div class="line">
+            <span>{{ item.nombre }}</span>
+            <span>${{ item.subtotal.toFixed(2) }}</span>
+          </div>
+        }
+      </aside>
+    </div>
+  }
+
+  @if (successOrder) {
+    <article class="success">
+      <h2>Pago aprobado</h2>
+      <p>Pedido #{{ successOrder.id }} creado con total ${{ successOrder.total.toFixed(2) }}.</p>
+      <a routerLink="/orders">Ver pedidos</a>
+    </article>
+  }
+</section>

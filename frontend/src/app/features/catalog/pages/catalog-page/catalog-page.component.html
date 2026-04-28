@@ -1,0 +1,70 @@
+<section class="catalog-hero">
+  <p class="eyebrow">Marketplace</p>
+  <h1>Descubre productos con experiencia premium</h1>
+  <p class="lead">
+    Puedes navegar como invitado, añadir productos al carrito local y luego iniciar sesion para finalizar la compra.
+  </p>
+  @if (!loading && !errorMessage && products.length > 0) {
+    <p class="guest-note">El contador del carrito se actualiza al instante arriba.</p>
+  }
+</section>
+
+<section class="filters">
+  <div class="filter-group">
+    <input 
+      type="text" 
+      [(ngModel)]="searchTerm" 
+      (ngModelChange)="onSearch()" 
+      placeholder="Buscar productos..."
+      class="search-input"
+    >
+  </div>
+  <div class="filter-group">
+    <select 
+      [(ngModel)]="selectedCategoryId" 
+      (change)="onCategoryChange()"
+      class="category-select"
+    >
+      <option [ngValue]="null">Todas las categorías</option>
+      @for (cat of categories; track cat.id) {
+        <option [ngValue]="cat.id">{{ cat.nombre }}</option>
+      }
+    </select>
+  </div>
+</section>
+
+<section class="cards">
+  @if (loading) {
+    <article class="card placeholder">Cargando catalogo...</article>
+  }
+
+  @if (errorMessage) {
+    <article class="card error">{{ errorMessage }}</article>
+  }
+
+  @for (product of products; track product.id) {
+    <article class="card card-{{ stockAlertLevel(product) }}">
+      <p class="category">SKU: {{ product.sku }}</p>
+      <h2>{{ product.nombre }}</h2>
+      <p class="price">${{ product.precio.toFixed(2) }}</p>
+      <p class="stock">Stock disponible: {{ product.stock }}</p>
+      @if (stockAlertLevel(product) === 'critical') {
+        <p class="stock-alert stock-alert-critical">Stock crítico. Quedan {{ product.stock }} unidades.</p>
+      } @else if (stockAlertLevel(product) === 'warning') {
+        <p class="stock-alert stock-alert-warning">Stock bajo. Revisa disponibilidad antes de comprar.</p>
+      }
+
+      @if (isAdmin && stockAlertLevel(product) !== 'ok') {
+        <p class="admin-note">Aviso admin: el inventario de este producto requiere reposición.</p>
+      }
+
+      <button
+        type="button"
+        (click)="addToCart(product)"
+        [disabled]="addingProductId === product.id || product.stock === 0"
+      >
+        {{ addingProductId === product.id ? 'Agregando...' : 'Agregar al carrito' }}
+      </button>
+    </article>
+  }
+</section>

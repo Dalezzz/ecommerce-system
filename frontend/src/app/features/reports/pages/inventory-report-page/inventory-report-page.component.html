@@ -1,0 +1,55 @@
+<section class="report-hero">
+  <p class="eyebrow">Inventario</p>
+  <h1>Reporte de inventario en rojo</h1>
+  <p class="lead">Los productos en rojo están por debajo del umbral crítico o sin stock.</p>
+
+  <div class="toolbar">
+    <label>
+      <input type="checkbox" [checked]="onlyCritical" (change)="toggleOnlyCritical($any($event.target).checked)" />
+      Mostrar solo críticos
+    </label>
+    <button type="button" (click)="exportCsv()" [disabled]="items.length === 0">Exportar CSV</button>
+  </div>
+</section>
+
+@if (loading) {
+  <p class="placeholder">Cargando inventario...</p>
+}
+
+@if (errorMessage) {
+  <p class="error">{{ errorMessage }}</p>
+}
+
+@if (!loading && !errorMessage && items.length === 0) {
+  <p class="placeholder">No hay productos con alerta para el filtro seleccionado.</p>
+}
+
+@if (!loading && items.length > 0) {
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Código</th>
+          <th>Nombre</th>
+          <th>Stock actual</th>
+          <th>Stock mínimo</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of items; track item.producto_id) {
+          <tr class="row-{{ item.color }}">
+            <td>{{ item.sku }}</td>
+            <td>
+              <strong>{{ item.nombre }}</strong>
+              <p>{{ item.categoria ?? 'Sin categoría' }}</p>
+            </td>
+            <td>{{ item.stock_actual }}</td>
+            <td>{{ item.stock_minimo }}</td>
+            <td><span class="state state-{{ item.color }}">{{ item.estado }}</span></td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}

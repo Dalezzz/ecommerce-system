@@ -1,0 +1,193 @@
+.orders {
+  display: grid;
+  gap: 1rem;
+
+  h1 {
+    margin-bottom: 0.4rem;
+  }
+
+  p {
+    color: rgba(229, 237, 255, 0.82);
+  }
+
+  .placeholder {
+    opacity: 0.8;
+  }
+
+  .error {
+    color: #ffb7b7;
+  }
+
+  .orders-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: end;
+    flex-wrap: wrap;
+  }
+
+  .filters {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+
+    label {
+      display: grid;
+      gap: 0.35rem;
+      font-size: 0.9rem;
+      color: rgba(229, 237, 255, 0.82);
+    }
+
+    select {
+      min-width: 11rem;
+      border-radius: 0.75rem;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(7, 19, 36, 0.72);
+      color: #f3f7ff;
+      padding: 0.55rem 0.75rem;
+    }
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(7, 19, 36, 0.72);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 1rem;
+    overflow: hidden;
+  }
+
+  th,
+  td {
+    padding: 0.85rem 0.9rem;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  thead th {
+    color: #8cc7ff;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .actions {
+    display: flex;
+    gap: 0.55rem;
+    flex-wrap: wrap;
+
+    button {
+      border: 0;
+      border-radius: 999px;
+      padding: 0.45rem 0.8rem;
+      background: #f6c86f;
+      color: #2e2108;
+      font-weight: 700;
+      cursor: pointer;
+    }
+  }
+
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.75rem;
+
+    button {
+      border: 0;
+      border-radius: 999px;
+      padding: 0.5rem 0.85rem;
+      background: rgba(255, 255, 255, 0.12);
+      color: #f4f8ff;
+    }
+  }
+
+  .detail-card {
+    padding: 1rem;
+    border-radius: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: linear-gradient(160deg, rgba(16, 36, 68, 0.86), rgba(11, 23, 45, 0.88));
+  }
+
+  .detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .eyebrow {
+    margin: 0;
+    color: #7eb7ff;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.75rem;
+  }
+
+  .detail-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+    gap: 0.5rem 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .address-box {
+    margin-bottom: 1rem;
+    padding: 0.85rem 1rem;
+    border-radius: 0.9rem;
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .items {
+    display: grid;
+    gap: 0.7rem;
+
+    article {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.8rem 0.9rem;
+      border-radius: 0.85rem;
+      background: rgba(255, 255, 255, 0.05);
+    }
+  }
+
+  .state {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.4rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: capitalize;
+  }
+
+  .state-pendiente,
+  .state-pagado {
+    background: rgba(252, 211, 77, 0.18);
+    color: #ffd37a;
+  }
+
+  .state-enviada,
+  .state-entregada {
+    background: rgba(74, 222, 128, 0.15);
+    color: #91f7af;
+  }
+
+  .state-cancelada {
+    background: rgba(248, 113, 113, 0.16);
+    color: #ff8f8f;
+  }
+
+  .detail-actions {
+    margin-top: 1rem;
+    justify-content: flex-end;
+  }
+
+  .danger {
+    background: linear-gradient(135deg, #b42318, #ef4444) !important;
+    color: #fff !important;
+  }
+}

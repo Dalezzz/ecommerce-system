@@ -1,0 +1,29 @@
+<section class="auth-wrap">
+  <div class="auth-card">
+    <p class="eyebrow">E-commerce Access</p>
+    <h1>Inicia sesion</h1>
+    <p class="subtitle">Panel seguro para compras, carrito y seguimiento de pedidos.</p>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+      <label>
+        Email
+        <input type="email" formControlName="email" placeholder="admin@demo.com" />
+      </label>
+      <small *ngIf="form.controls.email.touched && form.controls.email.invalid">Email invalido</small>
+
+      <label>
+        Password
+        <input type="password" formControlName="password" placeholder="********" />
+      </label>
+      <small *ngIf="form.controls.password.touched && form.controls.password.invalid">
+        Minimo 8 caracteres
+      </small>
+
+      <small *ngIf="errorMessage">{{ errorMessage }}</small>
+
+      <button type="submit" [disabled]="isSubmitting">
+        {{ isSubmitting ? 'Ingresando...' : 'Entrar' }}
+      </button>
+    </form>
+  </div>
+</section>

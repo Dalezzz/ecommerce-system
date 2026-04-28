@@ -1,0 +1,60 @@
+<section class="cart-page">
+  <div class="hero">
+    <p class="eyebrow">Carrito</p>
+    <h1>Revisa los productos que vas a comprar</h1>
+    <p class="lead">
+      Aquí ves lo que has agregado. Si eres invitado, el carrito se guarda localmente hasta que inicies sesión.
+    </p>
+  </div>
+
+  @if (loading) {
+    <p class="placeholder">Cargando carrito...</p>
+  }
+
+  @if (errorMessage) {
+    <p class="error">{{ errorMessage }}</p>
+  }
+
+  @if (!loading && !errorMessage && items.length === 0) {
+    <article class="empty-state">
+      <h2>Tu carrito está vacío</h2>
+      <p>Vuelve al catálogo para agregar productos.</p>
+      <a routerLink="/catalog">Ir al catálogo</a>
+    </article>
+  }
+
+  @if (!loading && items.length > 0) {
+    <div class="cart-layout">
+      <section class="items-list">
+        @for (item of items; track item.producto_id) {
+          <article class="item-card">
+            <div>
+              <p class="sku">Producto #{{ item.producto_id }}</p>
+              <h2>{{ item.nombre }}</h2>
+              <p>{{ item.cantidad }} x ${{ item.precio_unitario.toFixed(2) }}</p>
+            </div>
+            <div class="item-actions">
+              <strong>${{ item.subtotal.toFixed(2) }}</strong>
+              <button type="button" (click)="removeItem(item.producto_id)">Quitar</button>
+            </div>
+          </article>
+        }
+      </section>
+
+      <aside class="summary-card">
+        <p class="eyebrow">Resumen</p>
+        <h2>${{ total.toFixed(2) }}</h2>
+        <p>{{ items.length }} productos en el carrito</p>
+
+        <div class="summary-actions">
+          <button type="button" class="secondary" (click)="clearCart()">Vaciar carrito</button>
+          @if (isAuthenticated) {
+            <a routerLink="/cart/checkout" class="primary">Ir a pagar</a>
+          } @else {
+            <a routerLink="/auth/login" class="primary">Inicia sesión para pagar</a>
+          }
+        </div>
+      </aside>
+    </div>
+  }
+</section>

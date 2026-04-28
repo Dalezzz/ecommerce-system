@@ -1,0 +1,114 @@
+.report-hero {
+  padding: 1.2rem 0 1rem;
+  display: grid;
+  gap: 0.8rem;
+}
+
+.eyebrow {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #8cc7ff;
+  font-size: 0.75rem;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(2rem, 4.5vw, 3rem);
+}
+
+.lead,
+.placeholder,
+.error {
+  color: rgba(229, 237, 255, 0.82);
+}
+
+.error {
+  color: #ffb7b7;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+
+  label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  button {
+    border: 0;
+    border-radius: 999px;
+    padding: 0.6rem 1rem;
+    font-weight: 700;
+    background: #f6c86f;
+    color: #2e2108;
+  }
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(7, 19, 36, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+th,
+td {
+  padding: 0.85rem 0.9rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+thead th {
+  color: #8cc7ff;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.row-red {
+  background: rgba(239, 68, 68, 0.12);
+}
+
+.row-yellow {
+  background: rgba(245, 158, 11, 0.12);
+}
+
+.row-green {
+  background: rgba(34, 197, 94, 0.06);
+}
+
+.state {
+  display: inline-flex;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+}
+
+.state-red {
+  background: rgba(248, 113, 113, 0.18);
+  color: #ff9d9d;
+}
+
+.state-yellow {
+  background: rgba(251, 191, 36, 0.18);
+  color: #ffd86a;
+}
+
+.state-green {
+  background: rgba(74, 222, 128, 0.16);
+  color: #92f7b1;
+}

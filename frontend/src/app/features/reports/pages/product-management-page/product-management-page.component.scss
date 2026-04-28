@@ -1,0 +1,143 @@
+.admin-container {
+  padding: 2rem;
+  color: white;
+}
+
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+
+  h1 { margin: 0; }
+}
+
+.btn-primary {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: 500;
+
+  &:hover { background: #1d4ed8; }
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+
+  &:hover { background: rgba(255, 255, 255, 0.15); }
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(16, 36, 68, 0.86);
+  border-radius: 1rem;
+  overflow: hidden;
+
+  th, td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  th {
+    background: rgba(255, 255, 255, 0.05);
+    font-weight: 600;
+  }
+}
+
+.status-badge {
+  padding: 0.2rem 0.6rem;
+  border-radius: 1rem;
+  font-size: 0.8rem;
+
+  &.active { background: rgba(34, 197, 94, 0.2); color: #4ade80; }
+  &.inactive { background: rgba(239, 68, 68, 0.2); color: #f87171; }
+}
+
+.btn-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  margin-right: 0.5rem;
+  padding: 0.2rem;
+  border-radius: 0.3rem;
+
+  &:hover { background: rgba(255, 255, 255, 0.1); }
+}
+
+.edit-form-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.edit-form-card {
+  background: #0b172d;
+  padding: 2rem;
+  border-radius: 1rem;
+  width: 100%;
+  max-width: 800px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
+  h2 { margin-top: 0; margin-bottom: 1.5rem; }
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  label { font-size: 0.9rem; color: rgba(255, 255, 255, 0.7); }
+
+  input, select, textarea {
+    padding: 0.6rem;
+    border-radius: 0.4rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+
+    &:focus { border-color: #2563eb; outline: none; }
+  }
+
+  textarea { height: 100px; resize: vertical; }
+
+  &.full-width { grid-column: span 2; }
+  &.checkbox { 
+    grid-column: span 2;
+    flex-direction: row; 
+    align-items: center;
+    gap: 1rem;
+    label { color: white; cursor: pointer; }
+    input { width: auto; }
+  }
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+}

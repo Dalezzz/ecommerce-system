@@ -1,0 +1,143 @@
+.cart-page {
+  display: grid;
+  gap: 1rem;
+}
+
+.hero {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.eyebrow {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #8cc7ff;
+  font-size: 0.75rem;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(2rem, 4.5vw, 3rem);
+}
+
+.lead,
+.placeholder,
+.error,
+.empty-state p {
+  color: rgba(229, 237, 255, 0.82);
+}
+
+.error {
+  color: #ffb7b7;
+}
+
+.empty-state,
+.summary-card,
+.item-card {
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: linear-gradient(160deg, rgba(16, 36, 68, 0.86), rgba(11, 23, 45, 0.88));
+}
+
+.empty-state {
+  padding: 1.2rem;
+
+  a {
+    display: inline-flex;
+    margin-top: 0.3rem;
+    color: #2a1e08;
+    background: #f6c86f;
+    padding: 0.55rem 0.9rem;
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 700;
+  }
+}
+
+.cart-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.65fr) minmax(18rem, 0.8fr);
+  gap: 1rem;
+}
+
+.items-list {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.item-card {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.sku {
+  margin: 0;
+  color: #7eb7ff;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.item-actions {
+  display: grid;
+  justify-items: end;
+  gap: 0.6rem;
+
+  button {
+    border: 0;
+    border-radius: 999px;
+    padding: 0.5rem 0.85rem;
+    background: rgba(255, 255, 255, 0.12);
+    color: #f4f8ff;
+    cursor: pointer;
+  }
+}
+
+.summary-card {
+  padding: 1rem;
+  display: grid;
+  gap: 0.8rem;
+  align-content: start;
+}
+
+.summary-actions {
+  display: grid;
+  gap: 0.6rem;
+
+  .secondary,
+  .primary {
+    text-decoration: none;
+    text-align: center;
+    padding: 0.65rem 0.9rem;
+    border-radius: 999px;
+    font-weight: 700;
+  }
+
+  .secondary {
+    background: rgba(255, 255, 255, 0.12);
+    color: #f4f8ff;
+    border: 0;
+  }
+
+  .primary {
+    background: #f6c86f;
+    color: #2a1e08;
+  }
+}
+
+@media (max-width: 900px) {
+  .cart-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .item-card {
+    flex-direction: column;
+  }
+
+  .item-actions {
+    justify-items: start;
+  }
+}

@@ -1,0 +1,100 @@
+<div class="admin-container">
+  <header class="admin-header">
+    <h1>Gestión de Productos</h1>
+    <button class="btn-primary" (click)="startNewProduct()">+ Nuevo Producto</button>
+  </header>
+
+  @if (editingProduct) {
+    <section class="edit-form-overlay">
+      <div class="edit-form-card">
+        <h2>{{ isNewProduct ? 'Nuevo' : 'Editar' }} Producto</h2>
+        <form (ngSubmit)="saveProduct()">
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Nombre</label>
+              <input type="text" [(ngModel)]="editingProduct.nombre" name="nombre" required>
+            </div>
+            <div class="form-group">
+              <label>SKU</label>
+              <input type="text" [(ngModel)]="editingProduct.sku" name="sku" required>
+            </div>
+            <div class="form-group">
+              <label>Precio</label>
+              <input type="number" [(ngModel)]="editingProduct.precio" name="precio" required min="0">
+            </div>
+            <div class="form-group">
+              <label>Stock</label>
+              <input type="number" [(ngModel)]="editingProduct.stock" name="stock" required min="0">
+            </div>
+            <div class="form-group">
+              <label>Categoría</label>
+              <select [(ngModel)]="editingProduct.categoria_id" name="categoria_id" required>
+                @for (cat of categories; track cat.id) {
+                  <option [value]="cat.id">{{ cat.nombre }}</option>
+                }
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Imagen URL</label>
+              <input type="text" [(ngModel)]="editingProduct.imagen_url" name="imagen_url">
+            </div>
+            <div class="form-group full-width">
+              <label>Descripción</label>
+              <textarea [(ngModel)]="editingProduct.descripcion" name="descripcion"></textarea>
+            </div>
+            <div class="form-group checkbox">
+              <label>
+                <input type="checkbox" [(ngModel)]="editingProduct.activo" name="activo">
+                Activo
+              </label>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn-secondary" (click)="cancelEdit()">Cancelar</button>
+            <button type="submit" class="btn-primary">Guardar</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  }
+
+  <section class="product-list">
+    @if (loading) {
+      <p>Cargando productos...</p>
+    } @else {
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>SKU</th>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Stock</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (product of products; track product.id) {
+            <tr>
+              <td>{{ product.id }}</td>
+              <td>{{ product.sku }}</td>
+              <td>{{ product.nombre }}</td>
+              <td>${{ product.precio.toFixed(2) }}</td>
+              <td>{{ product.stock }}</td>
+              <td>
+                <span [class]="'status-badge ' + (product.activo ? 'active' : 'inactive')">
+                  {{ product.activo ? 'Activo' : 'Inactivo' }}
+                </span>
+              </td>
+              <td class="actions">
+                <button class="btn-icon" (click)="editProduct(product)" title="Editar">✏️</button>
+                <button class="btn-icon" (click)="deleteProduct(product.id)" title="Eliminar">🗑️</button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
+  </section>
+</div>

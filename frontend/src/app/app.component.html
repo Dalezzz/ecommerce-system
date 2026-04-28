@@ -1,0 +1,27 @@
+<div class="app-shell">
+  <header class="topbar">
+    <a class="brand" routerLink="/catalog">{{ title }}</a>
+    <nav>
+      <a routerLink="/catalog" routerLinkActive="active">
+        Catalogo
+      </a>
+      <a routerLink="/cart" routerLinkActive="active">
+        Carrito
+        <span class="badge">{{ cartCount() }}</span>
+      </a>
+      <a routerLink="/orders" routerLinkActive="active">Pedidos</a>
+      <a *ngIf="isAdmin" routerLink="/admin/inventory" routerLinkActive="active">Reportes</a>
+      <a *ngIf="isAdmin" routerLink="/admin/products" routerLinkActive="active">Productos</a>
+      <a *ngIf="!isAuthenticated" routerLink="/auth/login" routerLinkActive="active">Login</a>
+      <button *ngIf="isAuthenticated" type="button" (click)="logout()">Salir</button>
+    </nav>
+  </header>
+
+  @if (notification(); as toast) {
+    <div class="toast toast-{{ toast.type }}">{{ toast.message }}</div>
+  }
+
+  <main>
+    <router-outlet />
+  </main>
+</div>

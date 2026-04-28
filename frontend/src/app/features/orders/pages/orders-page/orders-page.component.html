@@ -1,0 +1,126 @@
+<section class="orders">
+  <div class="orders-header">
+    <div>
+      <h1>Mis pedidos</h1>
+      <p>Consulta el historial, filtra por estado y abre el detalle de cada pedido.</p>
+    </div>
+
+    <div class="filters">
+      <label>
+        Estado
+        <select [value]="statusFilter" (change)="setStatusFilter($any($event.target).value)">
+          <option value="todos">Todos</option>
+          <option value="pendiente">Pendientes</option>
+          <option value="pagado">Pagados</option>
+          <option value="enviada">Enviados</option>
+          <option value="entregada">Entregados</option>
+          <option value="cancelada">Cancelados</option>
+        </select>
+      </label>
+
+      <label>
+        Orden
+        <select [value]="sortOrder" (change)="setSortOrder($any($event.target).value)">
+          <option value="desc">Más recientes</option>
+          <option value="asc">Más antiguos</option>
+        </select>
+      </label>
+    </div>
+  </div>
+
+  @if (loading) {
+    <p class="placeholder">Cargando pedidos...</p>
+  }
+
+  @if (errorMessage) {
+    <p class="error">{{ errorMessage }}</p>
+  }
+
+  @if (!loading && !errorMessage && orders.length === 0) {
+    <p class="placeholder">Aun no tienes pedidos registrados.</p>
+  }
+
+  @if (!loading && orders.length > 0) {
+    <table>
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Pedido</th>
+          <th>Total</th>
+          <th>Estado</th>
+          <th>Items</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (order of orders; track order.id) {
+          <tr>
+            <td>{{ order.fecha_creacion | date : 'dd/MM/yyyy HH:mm' }}</td>
+            <td>#{{ order.id }}</td>
+            <td>${{ order.total.toFixed(2) }}</td>
+            <td><span class="state state-{{ order.estado }}">{{ order.estado }}</span></td>
+            <td>{{ order.items_total }}</td>
+            <td class="actions">
+              <button type="button" (click)="selectOrder(order.id)">Ver detalles</button>
+              <button type="button" (click)="reorder(order.id)">Reordenar</button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+
+    <div class="pagination">
+      <button type="button" (click)="previousPage()" [disabled]="page === 1">Anterior</button>
+      <span>Página {{ page }}</span>
+      <button type="button" (click)="nextPage()" [disabled]="page * pageSize >= total">Siguiente</button>
+    </div>
+  }
+
+  @if (selectedOrder) {
+    <article class="detail-card">
+      <div class="detail-header">
+        <div>
+          <p class="eyebrow">Detalle de pedido</p>
+          <h2>#{{ selectedOrder.id }}</h2>
+        </div>
+        <span class="state state-{{ selectedOrder.estado }}">{{ selectedOrder.estado }}</span>
+      </div>
+
+      <div class="detail-grid">
+        <p><strong>Fecha:</strong> {{ selectedOrder.fecha_creacion | date : 'dd/MM/yyyy HH:mm' }}</p>
+        <p><strong>Pago:</strong> {{ selectedOrder.metodo_pago }}</p>
+        <p><strong>Subtotal:</strong> ${{ selectedOrder.subtotal.toFixed(2) }}</p>
+        <p><strong>Impuestos:</strong> ${{ selectedOrder.impuestos.toFixed(2) }}</p>
+        <p><strong>Envío:</strong> ${{ selectedOrder.costo_envio.toFixed(2) }}</p>
+        <p><strong>Total:</strong> ${{ selectedOrder.total.toFixed(2) }}</p>
+      </div>
+
+      @if (selectedOrder.direccion_entrega) {
+        <div class="address-box">
+          <p><strong>Envío:</strong> {{ selectedOrder.direccion_entrega.direccion }}</p>
+          <p>{{ selectedOrder.direccion_entrega.ciudad }}, {{ selectedOrder.direccion_entrega.pais }}</p>
+          <p>{{ selectedOrder.direccion_entrega.codigo_postal }}</p>
+        </div>
+      }
+
+      <div class="items">
+        @for (item of selectedOrder.items; track item.producto_id) {
+          <article>
+            <div>
+              <h3>{{ item.producto_nombre }}</h3>
+              <p>{{ item.cantidad }} x ${{ item.precio_unitario.toFixed(2) }}</p>
+            </div>
+            <strong>${{ item.subtotal.toFixed(2) }}</strong>
+          </article>
+        }
+      </div>
+
+      <div class="actions detail-actions">
+        @if (canCancel(selectedOrder)) {
+          <button type="button" class="danger" (click)="cancelSelectedOrder()">Cancelar pedido</button>
+        }
+        <button type="button" (click)="reorder(selectedOrder.id)">Reordenar todo</button>
+      </div>
+    </article>
+  }
+</section>
