@@ -23,6 +23,7 @@ app.add_middleware(
 def startup() -> None:
     Base.metadata.create_all(bind=engine)
     with engine.begin() as connection:
+        # 1. Asegurar columnas de ordenes (migración manual simple)
         for column_name, column_ddl in (
             ("subtotal", "DOUBLE PRECISION NOT NULL DEFAULT 0"),
             ("impuestos", "DOUBLE PRECISION NOT NULL DEFAULT 0"),
@@ -41,6 +42,22 @@ def startup() -> None:
             ).first()
             if not exists:
                 connection.execute(text(f"ALTER TABLE ordenes ADD COLUMN {column_name} {column_ddl}"))
+
+        # 2. Seed automático si no hay categorías
+        has_categories = connection.execute(text("SELECT 1 FROM categorias LIMIT 1")).first()
+        if not has_categories:
+            connection.execute(text("""
+                INSERT INTO categorias (nombre, descripcion) VALUES
+                ('Electronica', 'Dispositivos y accesorios tecnologicos'),
+                ('Hogar', 'Articulos para casa y oficina'),
+                ('Moda', 'Ropa y accesorios');
+            """))
+            connection.execute(text("""
+                INSERT INTO productos (sku, nombre, descripcion, precio, stock, categoria_id, imagen_url, activo) VALUES
+                ('SKU001', 'Auriculares Bluetooth', 'Cancelacion de ruido', 79.99, 120, 1, 'https://picsum.photos/seed/prod1/640/480', TRUE),
+                ('SKU002', 'Teclado Mecanico', 'Switches lineales, formato TKL', 59.50, 80, 1, 'https://picsum.photos/seed/prod2/640/480', TRUE),
+                ('SKU003', 'Lampara Escritorio', 'Luz LED regulable', 25.00, 200, 2, 'https://picsum.photos/seed/prod3/640/480', TRUE);
+            """))
 
 
 @app.exception_handler(ValueError)
